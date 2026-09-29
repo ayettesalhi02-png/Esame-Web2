@@ -39,7 +39,10 @@ function StoryCard({
   const commentsLabel = `${story.descendants} commenti`;
   const timeLabel = story.timeLabel || 'N/D';
   const domain = story.url ? getHostname(story.url) : '';
-  const excerpt = (story.text || domain || 'Story in evidenza').replace(/\s+/g, ' ').trim().slice(0, 160);
+  const excerpt = (story.text || domain || 'Story in evidenza')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 160);
 
   const sourceLink = story.url ? (
     <a className="story-source-link" href={story.url} target="_blank" rel="noreferrer">
@@ -50,7 +53,11 @@ function StoryCard({
   );
 
   const authorLink =
-    author !== 'anon' ? <a href={`/profile?user=${encodeURIComponent(story.by)}`}>{author}</a> : author;
+    author !== 'anon' ? (
+      <a href={`/profile?user=${encodeURIComponent(story.by)}`}>{author}</a>
+    ) : (
+      author
+    );
 
   function handleToggleSave() {
     const result = onToggleSave?.(story);
@@ -133,15 +140,21 @@ function StoryCard({
       <div className="story-card__top">
         <div className="story-card__heading">
           <p className="story-card__eyebrow">#{story.id}</p>
-          <h3 className="story-card__title"></h3>
+          <h3 className="story-card__title">{threadHref}</h3>
         </div>
         {actions}
       </div>
 
-      <div className="story-card__meta"></div>
+      <div className="story-card__meta">
+        <span className="chip chip--score">{scoreLabel}</span>
+        <span className="chip chip--comments">{commentsLabel}</span>
+        <span className="chip chip--time">{timeLabel}</span>
+        <span className="chip chip--author">{authorLink}</span>
+      </div>
 
       <p className="story-card__excerpt">{excerpt}</p>
       <div className="story-card__footer">
+        {sourceLink}
         <span className="story-card__footnote">ID {story.id}</span>
       </div>
     </article>
