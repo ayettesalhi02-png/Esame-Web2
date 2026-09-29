@@ -140,7 +140,9 @@ function StoryCard({
       <div className="story-card__top">
         <div className="story-card__heading">
           <p className="story-card__eyebrow">#{story.id}</p>
-          <h3 className="story-card__title">{threadHref}</h3>
+          <h3 className="story-card__title">
+            <a href={threadHref}>{story.title}</a>
+          </h3>
         </div>
         {actions}
       </div>
